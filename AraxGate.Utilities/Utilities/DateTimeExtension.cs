@@ -1,0 +1,142 @@
+﻿using System.Globalization;
+
+namespace AraxGate.Utilities;
+
+public static class DateTimeExtension
+{
+	public static DateTime ShamsiToMiladi(this DateTime dateTime)
+	{
+		DateTime result;
+		DateTime.TryParse(dateTime.ToString(), new CultureInfo("fa-IR"), out result);
+		return result;
+	}
+
+	public static DateTime? ShamsiToMiladi(this DateTime? dateTime)
+	{
+		DateTime result;
+		DateTime.TryParse(dateTime.ToString(), new CultureInfo("fa-IR"), out result);
+		return result;
+	}
+
+	public static DateTime? MiladiToShamsi(this DateTime dateTime)
+	{
+		if (dateTime.Year < 623)
+		{
+			return null;
+		}
+		PersianCalendar pc = new PersianCalendar();
+		int year = pc.GetYear(dateTime);
+		int month = pc.GetMonth(dateTime);
+		int day = pc.GetDayOfMonth(dateTime);
+		int hour = pc.GetHour(dateTime);
+		int minute = pc.GetMinute(dateTime);
+		if ((month == 2 || month == 4 || month == 6) && (day == 30 || day == 31))
+		{
+			DateTime.TryParse($"{year}/{month}/{day} {hour}:{minute}", new CultureInfo("fa-IR"), out DateTime res);
+			return res;
+		}
+		return new DateTime(year, month, day, hour, minute, 0);
+	}
+
+	public static PersianDate MiladiToPersianDate(this DateTime dateTime)
+	{
+		if (dateTime.Year < 623)
+		{
+			return new PersianDate(1, 1, 1);
+		}
+        PersianCalendar pc = new PersianCalendar();
+		int year = pc.GetYear(dateTime);
+		int month = pc.GetMonth(dateTime);
+		int day = pc.GetDayOfMonth(dateTime);
+
+        return new PersianDate(year, month, day);
+	}
+
+	public static string MiladiToShamsiDateString(this DateTime dateTime)
+	{
+		var shamsi = MiladiToPersianDate(dateTime);
+		return $"{shamsi.year}/{shamsi.month}/{shamsi.day}";
+	}
+	public static string MiladiToString(this DateTime dateTime)
+	{
+		return $"{dateTime.Day}/{dateTime.Month}/{dateTime.Year}";
+	}
+
+	public static string ToShamsiDateString(this DateTime? dateTime, System.DayOfWeek? dayOfWeek)
+	{
+		return $"{dayOfWeek?.PersianDayOfWeek()} {MiladiToShamsiDateString(dateTime.Value)} <br/>  ساعت: {dateTime?.Hour}:{dateTime?.Minute}";
+	}
+	public static string ToShamsiDateString(this DateTime dateTime, System.DayOfWeek? dayOfWeek)
+	{
+		return $"{dayOfWeek?.PersianDayOfWeek()} {MiladiToShamsiDateString(dateTime)} <br/>  ساعت: {dateTime.Hour}:{dateTime.Minute}";
+	}
+	public static string ToInlineShamsiDateString(this DateTime? dateTime, System.DayOfWeek? dayOfWeek)
+	{
+		return $"{dayOfWeek?.PersianDayOfWeek()} {MiladiToShamsiDateString(dateTime.Value)}  ساعت: {dateTime?.Hour}:{dateTime?.Minute}";
+	}
+	public static string ToMiladiDateString(this DateTime dateTime)
+	{
+        return $"{dateTime.DayOfWeek} {dateTime.Day}/{dateTime.Month}/{dateTime.Year} <br/> At {dateTime.Hour}:{dateTime.Minute}";
+	}
+	public static string ToInlineMiladiDateString(this DateTime dateTime)
+	{
+        return $"{dateTime.DayOfWeek} {dateTime.Day}/{dateTime.Month}/{dateTime.Year} at {dateTime.Hour}:{dateTime.Minute}";
+	}
+
+    public static string ToShortShamsiDateString(this DateTime dateTime)
+	{
+		string result = $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day}";
+		return result;
+	}
+
+    public static string PersianDayOfWeek(this DayOfWeek date)
+    {
+        switch (date)
+        {
+            case DayOfWeek.Saturday:
+                return "شنبه";
+            case DayOfWeek.Sunday:
+                return "یکشنبه";
+            case DayOfWeek.Monday:
+                return "دوشنبه";
+            case DayOfWeek.Tuesday:
+                return "سه شنبه";
+            case DayOfWeek.Wednesday:
+                return "چهارشنبه";
+            case DayOfWeek.Thursday:
+                return "پنجشنبه";
+            case DayOfWeek.Friday:
+                return "جمعه";
+            default:
+                throw new Exception();
+        }
+    }
+}
+
+public class PersianDate 
+{
+	public readonly byte day;
+	public readonly byte month;
+	public readonly byte hour;
+	public readonly int year;
+	public readonly byte minut;
+
+    public PersianDate(int year, int month, int day)
+    {
+		this.year = year;
+		this.month = (byte)month;
+		this.day = (byte)day;
+		this.hour = 12;
+		this.minut = 0;
+    }
+
+    public PersianDate(int year, int month, int day, int hour, int minut)
+    {
+        this.year = year;
+        this.month = (byte)month;
+        this.day = (byte)day;
+		this.hour = (byte)hour;
+		this.minut = (byte)minut;
+    }
+
+}

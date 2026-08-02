@@ -1,0 +1,15 @@
+F:\Source\Repos\AraxGate\AraxGate.Core\bin\Debug\net10.0\AraxGate.Core.Domain.deps.json
+F:\Source\Repos\AraxGate\AraxGate.Core\bin\Debug\net10.0\AraxGate.Core.Domain.dll
+F:\Source\Repos\AraxGate\AraxGate.Core\bin\Debug\net10.0\AraxGate.Core.Domain.pdb
+F:\Source\Repos\AraxGate\AraxGate.Core\bin\Debug\net10.0\AraxGate.Utilities.dll
+F:\Source\Repos\AraxGate\AraxGate.Core\bin\Debug\net10.0\AraxGate.Utilities.pdb
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.csproj.AssemblyReference.cache
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.AssemblyInfoInputs.cache
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.AssemblyInfo.cs
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.csproj.CoreCompileInputs.cache
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.DD478727.Up2Date
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.dll
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\refint\AraxGate.Core.Domain.dll
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\AraxGate.Core.Domain.pdb
+F:\Source\Repos\AraxGate\AraxGate.Core\obj\Debug\net10.0\ref\AraxGate.Core.Domain.dll

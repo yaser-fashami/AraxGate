@@ -1,0 +1,288 @@
+﻿@font-face {
+	font-family: 'Shabnam';
+	src: url('/fonts/ShabnamFD.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@media screen {
+	.table{
+		font-size:16px;
+	}
+	.plateWrapper2 {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		border-radius: 10px;
+		font-family: Shabnam;
+		font-weight: bolder;
+	}
+
+	.gateOutTable {
+		border: 1px solid dark !important;
+		border-top: 1px solid dark;
+		padding: 20PX;
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-image: linear-gradient(green, white, red);
+		border-radius: 10px;
+		width: 50vw;
+		height: 20vh;
+		font-family: Shabnam;
+		font-weight: bolder;
+	}
+
+	.otherWrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-image border-radius: 10px;
+		width: 50vw;
+		height: 200px;
+		font-family: Shabnam;
+		font-weight: bolder;
+		background-image: none
+	}
+
+	.plateWrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10px;
+		font-family: Shabnam;
+		font-weight: bolder;
+	}
+
+	.license-plate {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 450px;
+		background-color: #FFFFFF;
+		height: 120px;
+		border-radius: 10px;
+		overflow: hidden;
+		font-size: 38px;
+		border: 3px solid #000;
+	}
+
+	.rowPlate {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 220px;
+		background-color: #FFFFFF;
+		height: 60px;
+		border-radius: 10px;
+		overflow: hidden;
+		font-size: 22px;
+		border: 2px solid #000;
+	}
+
+	.flag {
+		height: 100%;
+		width: 60px;
+		background-image: url('/assets/media/images/car-number-plate-top-flag.jpg');
+	}
+
+	.rowFlag {
+		height: 100%;
+		width: 30px;
+		background-image: url('/assets/media/images/car-number-plate-top-rowFlag.jpg');
+	}
+
+	.numbers {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+
+		.numbers > span {
+			margin: 0px 5px 0px 5px;
+		}
+
+	.province {
+		height: 100%;
+		border-left: 3px solid #000;
+		display: flex;
+		flex-direction: column;
+		padding: 0 15px;
+		align-items: center;
+		justify-content: center;
+		background-image: url('/assets/media/images/car-number-plate-top-provienc.jpg');
+		background-repeat: no-repeat;
+		width: 90px;
+	}
+
+	.rowProvince {
+		height: 100%;
+		border-left: 1px solid #000;
+		display: flex;
+		flex-direction: column;
+		padding: 0 10px;
+		align-items: center;
+		justify-content: center;
+		background-image: url('/assets/media/images/car-number-plate-top-rowProvienc.jpg');
+		background-repeat: no-repeat;
+		width: 50px;
+	}
+
+	.twoNo {
+		width: 60px;
+		margin-inline-end: 10px
+	}
+
+	.threeNo {
+		width: 90px;
+	}
+
+	.alphabet {
+		width: 75px;
+		margin-inline-end: 10px;
+		font-size: 28px;
+		font-weight: 800;
+	}
+
+	.plateTypeDiv {
+		display: flex;
+		flex-direction: column;
+		align-self: flex-start;
+		position: relative;
+		top: -10px;
+		padding-left: 15px;
+	}
+
+		.plateTypeDiv > div > label {
+			margin-right: 20px;
+			margin-left: 5px;
+		}
+
+	#otherPlateInput {
+		width: 300px;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+@media print{
+	@page {
+		size: A5 landscape;
+		margin: 10mm;
+		page-break-inside: avoid;
+	}
+	#printBody {
+		width: 210mm;
+		height: 148mm;
+	}
+
+	.row {
+		max-height:240px !important;
+	}
+	.rowPlate {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 160px;
+		background-color: #FFFFFF;
+		height: 40px;
+		border-radius: 10px;
+		overflow: hidden;
+		font-size: 12px;
+		border: 2px solid #000;
+	}
+
+	.flag {
+		height: 100%;
+		background-image: url('/assets/media/images/car-number-plate-top-flag.jpg');
+	}
+
+	.rowFlag {
+		height: 100%;
+		background-image: url('/assets/media/images/car-number-plate-top-rowFlag.jpg');
+	}
+
+	.numbers {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.numbers > span {
+		margin: 0px 5px 0px 5px;
+	}
+
+	.province {
+		height: 100%;
+		border-left: 3px solid #000;
+		display: flex;
+		flex-direction: column;
+		padding: 0 15px;
+		align-items: center;
+		justify-content: center;
+		background-image: url('/assets/media/images/car-number-plate-top-provienc.jpg');
+		background-repeat: no-repeat;
+/*		width: 90px;
+*/	}
+
+	.rowProvince {
+		height: 100%;
+		border-left: 1px solid #000;
+		display: flex;
+		flex-direction: column;
+		padding: 0 10px;
+		align-items: center;
+		justify-content: center;
+		background-image: url('/assets/media/images/car-number-plate-top-rowProvienc.jpg');
+		background-repeat: no-repeat;
+	}
+
+	.twoNo {
+		margin-inline-end: 10px
+	}
+
+	.threeNo {
+	}
+
+	.alphabet {
+		width: 75px;
+		margin-inline-end: 10px;
+		font-size: 16px !important;
+		font-weight: 800;
+	}
+
+	.plateTypeDiv {
+		display: flex;
+		flex-direction: column;
+		align-self: flex-start;
+		position: relative;
+		top: -10px;
+		padding-left: 15px;
+	}
+
+	.plateTypeDiv > div > label {
+		margin-right: 20px;
+		margin-left: 5px;
+	}
+
+	#otherPlateInput {
+		width: 300px;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+
+}

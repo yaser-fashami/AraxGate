@@ -1,0 +1,406 @@
+﻿@using System.Security.Claims;
+@using Microsoft.AspNetCore.Identity;
+@using AraxGate.Core.Domain.Interfaces;
+@inject IAppVersionService AppVersionService;
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="" data-select2-id="select2-data-125-xzci">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - AraxSolution</title>
+	<link rel="icon" type="image/png"  href="~/assets/media/logos/SinaOilLogo2.png">
+	<link rel="stylesheet" href="~/css/SinaOilStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/style.bundle.css" asp-append-version="true" />
+	@await RenderSectionAsync("Links", required: false)
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" />
+	<link href="~/assets/css/style.bundle.css" rel="stylesheet" />
+	@inject  SignInManager<User> signinManager;
+	@{
+		var userId = Context.User.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+		var user = await signinManager.UserManager.FindByIdAsync(userId);
+		string role = signinManager.UserManager.GetRolesAsync(user).Result.First();
+		if(role.Length > 8)
+		{
+			role = role.Substring(0, 8);
+		}
+		ViewBag.CurrentUserRole = role.ToUpper();
+		ViewBag.CurrentUserAvatar = user.UserAvatar;
+	}
+</head>
+<body id="kt_app_body" data-kt-app-layout="light-header" data-kt-app-header-fixed="true" data-kt-app-toolbar-enabled="true" class="app-default">
+	<script>
+		var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }
+	</script>
+ 	<!--begin::App-->
+	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+		<!--begin::Page-->
+		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+			<!--begin::Header-->
+			<div id="kt_app_header" class="app-header">
+				<!--begin::Header container-->
+				<div class="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
+					<!--begin::Header wrapper-->
+					<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+						<!--begin::Navbar-->
+						<div class="app-navbar flex-shrink-0">
+							<!--begin::User menu-->
+							<div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+								<!--begin::Menu wrapper-->
+								<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+								<img src="~/assets/media/avatars/@ViewBag.CurrentUserAvatar" alt="user">
+								</div>
+								<!--begin::User account menu-->
+								<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true" style="">
+									<!--begin::Menu item-->
+									<div class="menu-item px-3">
+										<div class="menu-content d-flex align-items-center px-3">
+											<!--begin::Avatar-->
+											<div class="symbol symbol-50px me-5">
+											<img alt="Logo" src="~/assets/media/avatars/@ViewBag.CurrentUserAvatar">
+											</div>
+											<!--end::Avatar-->
+											<!--begin::Username-->
+											<div class="d-flex flex-column">
+												<div class="fw-bold d-flex align-items-center fs-5">@Context.User.Identity?.Name 
+													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">@ViewBag.CurrentUserRole</span>
+												</div>
+												<span class="fw-semibold text-muted fs-7">@Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value</span>
+											</div>
+											<!--end::Username-->
+										</div>
+									</div>
+									<!--end::Menu item-->
+									<!--begin::Menu separator-->
+									<div class="separator my-2"></div>
+									<!--end::Menu separator-->
+									
+								<!--begin::Menu item-->
+									<div class="menu-item px-5">
+										<a href="/BasicInfo/Settings" class="menu-link px-5">Settings</a>
+									</div>
+								<!--end::Menu item-->
+
+								<!--begin::Menu item-->
+									<div class="menu-item px-5">
+										<a href="/Account/List" class="menu-link px-5">User Management</a>
+									</div>
+									<!--end::Menu item-->
+
+									<!--begin::Menu item-->
+									<div class="menu-item px-5">
+										<a href="/Account/LogOut" class="menu-link px-5">Log Out</a>
+									</div>
+									<!--end::Menu item-->
+								</div>
+								<!--end::User account menu-->
+								<!--end::Menu wrapper-->
+							</div>
+							<!--end::User menu-->
+						</div>
+						<!--end::Navbar-->
+
+                        <!--begin::Toolbar-->
+                        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+                            <!--begin::Toolbar container-->
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex justify-content-center flex-wrap me-3">
+                                    <!--begin::Title-->
+                                    @* <h1 class="page-heading d-flex text-dark fw-bold fs-3 justify-content-center my-0">@ViewData["Title"]</h1> *@
+                                    <!--end::Title-->
+                                    <!--begin::Read Baskool-->
+                                    <a id="readBaskool" type="button" class="btn btn-success ms-4 min-w-lg-200px" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_stormBreaker">
+                                        Read Baskool
+                                    </a>
+                                    <!--end::Read Baskool-->
+                                </div>
+                                <!--end::Page title-->
+                            </div>
+                            <!--end::Toolbar container-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                        <div class="d-flex align-items-center me-5">
+                            <a href="/" class="d-flex align-items-center">
+                                <img src="/assets/media/logos/araxLogo.png" alt="Logo" class="h-150px" />
+                            </a>
+                        </div>
+
+						</div>
+					<!--end::Header wrapper-->
+				</div>
+				<!--end::Header container-->
+			</div>
+
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::App-->
+
+	<!--begin::Main-->
+	<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+		<!--begin::Content wrapper-->
+		<div class="container d-flex flex-column flex-column-fluid">
+			<!--begin::Content-->
+			<div id="kt_app_content" class="app-content flex-column-fluid">
+				<!--begin::Content container-->
+				<div id="kt_app_content_container" class="app-container container-fluid">
+					<!--begin::Row-->
+					<div id="main" role="main" class="row g-5 g-xl-10 m-5 mb-xl-10 pb-3" style="visibility:hidden">
+						@RenderBody()
+					</div>
+					<!--end::Row-->
+				</div>
+				<!--end::Content container-->
+			</div>
+			<!--end::Content-->
+		</div>
+		<!--end::Content wrapper-->
+		<!--begin::Footer-->
+		<div id="kt_app_footer" class="app-footer">
+				<!--begin::Footer container-->
+				<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+					<!--begin::Copyright-->
+					<div class="text-dark order-2 order-md-1">
+						<span class="text-muted fw-semibold me-1">2026©</span>
+						<a href="#" target="_blank" class="text-muted text-hover-primary">Arax Solutions</a>
+					</div>
+					<!--end::Copyright-->
+				<div class="order-3 text-muted">
+					<span>
+						Version @AppVersionService.Version
+					</span>
+					</div>
+				</div>
+				<!--end::Footer container-->
+			</div>
+		<!--end::Footer-->
+	</div>
+	<!--end:::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
+                <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+
+
+    <!--begin::Modal ReadBaskool-->
+    <div class="modal fade" tabindex="-1" id="kt_modal_stormBreaker">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalTitle">Gate Enterance</h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="bi bi-x fs-2"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <!--begin::Input group-->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-3 text-center">
+                                    Baskool:
+                                </span>
+                                <div class="overflow-hidden flex-grow-1">
+                                    <select id="selectBaskool" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+                                        <option></option>
+                                        <option value="a1">GateIn_A1</option>
+                                        <option value="a2">GateIn_A2</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-3">
+                                    Consignee:
+                                </span>
+                                <div class="overflow-hidden flex-grow-1">
+                                    <select id="selectConsignee" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-3">
+                                    Commodity:
+                                </span>
+                                <div class="overflow-hidden flex-grow-1">
+                                    <select id="commodity" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-4">
+                                    Custom permission:
+                                </span>
+                                <div class="input-group">
+                                    <input class="form-control rounded-start-0 rounded-end-2" id="customPermission" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="input-group flex-nowrap mt-4">
+                                <button type="button" style="border-radius:5px" class="btn btn-primary" id="camera_btn">Read Plate from Camera</button>
+                                <img id="platePic" src="" style="margin-left:50px;" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text  col-3">
+                                    Weight:
+                                </span>
+                                <div class="input-group">
+                                    <input class="form-control rounded-0" id="weight" disabled />
+                                    <span class="input-group-text">.Kg</span>
+                                </div>
+                            </div>
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-3">
+                                    Tank:
+                                </span>
+                                <div class="overflow-hidden flex-grow-1">
+                                    <select id="tank" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group flex-nowrap mt-4">
+                                <span class="input-group-text col-3">
+                                    TruckType:
+                                </span>
+                                <div class="overflow-hidden flex-grow-1">
+                                    <select id="selectTruckType" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group mt-4">
+                                <textarea id="descriptionIn" class="input-group border-gray-500 border-dashed col-lg-12 p-5 rounded-2 border-active-light" dir="rtl" rows="3" placeholder="Add Description" draggable="false"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-12">
+                        <div class="plateTypeDiv">
+                            <label style="margin-right:10px;">PlateType :</label>
+                            <div class="form-check form-check-custom form-check-solid  form-check-sm">
+                                <input class="form-check-input" type="radio" name="plateType" value="iran" id="" />
+                                <label for="plateType">
+                                    Iran
+                                </label>
+                                <br />
+                                <input class="form-check-input" type="radio" name="plateType" value="iraq" id="" />
+                                <label for="plateType">
+                                    Iraq
+                                </label>
+                                <input class="form-check-input" type="radio" name="plateType" value="afghan" id="" />
+                                <label for="plateType">
+                                    Afghan
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="display:none;" id="otherPlate" class="row my-5">
+                            <label class="form-label">TruckNo</label>
+                            <input type="text" id="otherPlateInput" class="form-control form-control-solid" autocomplete="off" />
+                        </div>
+
+                        <section class="wrapper">
+                            <div class="license-plate">
+                                <div class="flag"></div>
+                                <div class="numbers">
+                                    <input type="text" class="twoNo" id="twoNo" />
+                                    <select type="text" class="alphabet" id="alphabet" />
+                                    <option>الف</option>
+                                    <option>ب</option>
+                                    <option>پ</option>
+                                    <option>ت</option>
+                                    <option>ث</option>
+                                    <option>ج</option>
+                                    <option>چ</option>
+                                    <option>ح</option>
+                                    <option>خ</option>
+                                    <option>د</option>
+                                    <option>ذ</option>
+                                    <option>ر</option>
+                                    <option>ز</option>
+                                    <option>ژ</option>
+                                    <option>س</option>
+                                    <option>ش</option>
+                                    <option>ص</option>
+                                    <option>ض</option>
+                                    <option>ط</option>
+                                    <option>ظ</option>
+                                    <option selected="selected">ع</option>
+                                    <option>غ</option>
+                                    <option>ف</option>
+                                    <option>ق</option>
+                                    <option>ک</option>
+                                    <option>گ</option>
+                                    <option>ل</option>
+                                    <option>م</option>
+                                    <option>ن</option>
+                                    <option>و</option>
+                                    <option>ه</option>
+                                    <option>ی</option>
+                                    </select>
+                                    <input type="text" class="threeNo" id="threeNo" />
+                                </div>
+                                <div class="province"><input type="text" class="twoNo" id="provience" /></div>
+                            </div>
+                        </section>
+                    </div>
+                    <!--end::Input group-->
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="close_btn">Close</button>
+                    <button type="button" class="btn btn-primary" id="save_btn">Enter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Modal ReadBaskool-->
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>var hostUrl = "~/assets/";</script>
+	<script src="~/assets/plugins/global/plugins.bundle.js"></script>
+	<script src="~/assets/js/scripts.bundle.js"></script>
+
+
+	<script type="text/javascript">
+		var activeLink = '@ViewData["ActiveLink"]'
+
+		$(document).ready(function () {
+			if(activeLink != ''){
+				$('#'+activeLink).addClass("active");
+				$('#' + activeLink).parent().parent().parent().addClass("show");
+			}
+			setTimeout(function () {
+				$('#main').css('visibility', 'visible')
+				$('#main').hide();
+				$('#main').fadeIn();
+			}, 500)
+		})
+	</script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

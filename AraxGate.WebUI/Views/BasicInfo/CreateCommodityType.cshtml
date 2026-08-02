@@ -1,0 +1,82 @@
+﻿@{
+	ViewData["Title"] = "Create CommodityType";
+}
+@model CommodityType
+
+<div class="card mb-5 mb-xl-10">
+	<!--begin::Card header-->
+	<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+		<!--begin::Card title-->
+		<div class="card-title m-0">
+			<h3 class="fw-bold m-0">@ViewData["Title"]</h3>
+		</div>
+		<!--end::Card title-->
+	</div>
+	<!--begin::Card header-->
+	<!--begin::Content-->
+	<div class="collapse show">
+		<!--begin::Form-->
+		<form id="kt_account_profile_details_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" asp-controller="BasicInfo" asp-action="CreateCommodityType" method="post">
+			<!--begin::Card body-->
+			<div class="card-body border-top p-9">
+				<!--begin::Input group-->
+				<div class="row mb-4" style="min-height:69px;">
+					<!--begin::Col-->
+					<div class="col-lg-12">
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text required">CommodityTypeName</span>
+							<input type="text" asp-for="CommodityTypeName" maxlength="50" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+					</div>
+					<!--end::Col-->
+				</div>
+				<!--end::Input group-->
+				<!--begin::Input group-->
+				<div class="row mb-6">
+					<!--begin::Col-->
+					<div class="col-lg-12">
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text">Description</span>
+							<textarea asp-for="Description" maxlength="4000" rows="4" class="form-control hasMaxlength"></textarea>
+						</div>
+					</div>
+					<!--end::Col-->
+
+				</div>
+				<!--end::Input group-->
+
+			</div>
+			<!--end::Card body-->
+			<div asp-validation-summary="All" class="text-danger"></div>
+			<!--begin::Actions-->
+			<div class="card-footer d-flex justify-content-end py-6 px-9">
+				<a href="/BasicInfo/CommodityTypeList" class="btn btn-light btn-active-light-primary me-2">Back</a>
+				<button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
+				<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+			</div>
+			<!--end::Actions-->
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Content-->
+</div>
+
+
+@section Links{
+	<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+	<script type="text/javascript">
+		$('button[type="reset"]').click(function () {
+			$('select').val(null).trigger("change");
+		});
+		$('.hasMaxlength').maxlength({
+			warningClass: "badge badge-warning",
+			limitReachedClass: "badge badge-danger"
+		});
+	</script>
+}

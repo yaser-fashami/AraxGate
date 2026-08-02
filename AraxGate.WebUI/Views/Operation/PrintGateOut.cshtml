@@ -1,0 +1,136 @@
+﻿@{
+    Layout = null;
+}
+
+@model GateEntrance;
+
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header justify-content-center border-0 px-15">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <span class="fs-4">شرکت خدمات دریایی و بندری سیمین پارس - پایانه نفتی</span>
+        </div>
+        <!--end::Card title-->
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body">
+        <div class="row">
+            <label class="form-label">Gate Entrance No : <span id="entranceNo">@Model.GateEntranceNo</span></label>
+            <div class="col-12">
+                <table class="table align-middle table-row-solid no-footer">
+                    <thead>
+                        <tr class="text-center fw-bold fs-4 border-bottom-1 border-top-1 border-left-1 border-right-1 border-dark">
+                            <th class="w-400px text-start px-5">شماره پلاک</th>
+                            <th class="w-300px">کالا</th>
+                            <th class="w-200px">تاریخ</th>
+                            <th class="w-200px">وزن</th>
+                            <th class="w-100px" style="border-top: 0px; border-right:0px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center fw-bold" style="border: 1px solid black">
+                            @if (@Model.PlateType == PlateType.Iran)
+                            {
+                                if (@Model.TruckNo.Substring(2, 1) == "ا")
+                                {
+                                    <td class="px-5"><section class="plateWrapper2" style="align-items:left !important"><div class="rowPlate"><div class="rowFlag"> </div><div class="numbers"><span>@Model.TruckNo.Substring(0, 2)</span> <span> @Model.TruckNo.Substring(2, 3) </span> <span> @Model.TruckNo.Substring(5, 3)</span></div><div class="rowProvince">@Model.TruckNo.Substring(9, 2)</div></div></section></td>
+                                }
+                                else
+                                {
+                                    <td class="px-5"><section class="plateWrapper2"><div class="rowPlate"><div class="rowFlag"> </div><div class="numbers"><span>@Model.TruckNo.Substring(0, 2)</span> <span> @Model.TruckNo.Substring(2, 1) </span> <span> @Model.TruckNo.Substring(3, 3)</span></div><div class="rowProvince">@Model.TruckNo.Substring(7, 2)</div></div></section></td>
+                                }
+                            }
+                            else
+                            {
+                                <td class="px-5" style="height:60px">@Model.TruckNoletter</td>
+                            }
+
+                            <td>@Model.CommodityType.CommodityTypeName</td>
+                            <td><div class="badge badge-dark fw-bold">@Html.Raw(Model.GateInDate.ToShamsiDateString(Model.GateInDate.DayOfWeek))</div></td>
+                            <td>@Model.GateInWeight (.Kg)</td>
+                            <td> ورود </td>
+                        </tr>  
+                        <tr class="text-center fw-bold">
+                            <td>
+                                <div class="card text-start">
+                                    <label class="form-label"> نوع خودرو : </label>
+                                    <div class="input-group">
+                                        <input class="form-control" id="customPermissionNo" value="@Model.TruckType.TruckTypeName" disabled />
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="card text-start">
+                                    <label class="form-label"> مخزن : </label>
+                                    <div class="input-group">
+                                        <input class="form-control" id="customPermissionNo" value="@Model.OilTankType.TankName" disabled />
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td style="border: 1px solid black"><div class="badge badge-dark fw-bold">@Html.Raw(Model.GateOutDate.ToShamsiDateString(Model.GateInDate.DayOfWeek))</div></td>
+                              <td style="border: 1px solid black">@Model.GateOutWeight (.Kg)</td>
+                            <td style="border: 1px solid black"> خروج </td>
+                        </tr>
+                        <tr class="text-center fw-bold fs-4 p-10 border-bottom-1 border-solid border-dark" >
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="border: 1px solid black !important">@(Math.Abs((decimal)(Model.GateInWeight - Model.GateOutWeight)))(.Kg)</td>
+                            <td style="border: 1px solid black !important"> خالص </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" dir="rtl">
+                <div class="mt-4 col-3 card px-4">
+                    <label class="form-label"> مشتری : </label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="" id="consignee" value="@Model.Consignee.ConsigneeName" disabled />
+                    </div>
+                </div>
+                <div class="mt-4 col-3 card px-4">
+                    <label class="form-label"> شماره پروانه : </label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="" id="customPermissionNo" value="@Model.CustomPermissionNo" disabled />
+                    </div>
+                </div>
+            <div class="mt-4 col-3 card px-4">
+                <label class="form-label"> متصدی باسکول هنگام ورود : </label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="" id="consignee" value="@Model.GateInOperator.UserName" disabled />
+                </div>
+            </div>
+            <div class="mt-4 col-3 card px-4">
+                <label class="form-label"> متصدی باسکول هنگام خروج : </label>
+                <div class="input-group">
+                                        <input class="form-control" placeholder="" id="consignee" value="@Model.GateOutOperator?.UserName" disabled />
+                   
+                </div>
+            </div>
+        </div>
+        <div class="row text-center" dir="rtl">
+            <div class="col-12 p-4 mt-4">
+                <label class=""> آدرس : </label>
+                <label class="form-label"> اراضی پشتیبانی - پایانه نفتی شرکت سیمین پارس </label>
+                <!--begin::Separator-->
+                <div class="separator separator-dashed border-danger opacity-25 my-2"></div>
+                <!--end::Separator-->
+                <label class="form-label">مبنای محاسبه محموله های دریافتی / ارسالی باسکول شرکت سیمین پارس (سهامی خاص) می باشد. </label>
+            </div>
+        </div>
+    </div>
+    <!--end::Card body-->
+</div>
+<!--end::Card body-->
+
+
+
+

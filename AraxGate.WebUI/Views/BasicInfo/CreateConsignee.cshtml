@@ -1,0 +1,187 @@
+﻿@{
+	ViewData["Title"] = "Create Consignee";
+}
+@model Consignee
+
+<div class="card mb-5 mb-xl-10">
+	<!--begin::Card header-->
+	<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+		<!--begin::Card title-->
+		<div class="card-title m-0">
+			<h3 class="fw-bold m-0">@ViewData["Title"]</h3>
+		</div>
+		<!--end::Card title-->
+	</div>
+	<!--begin::Card header-->
+	<!--begin::Content-->
+	<div class="collapse show">
+		<!--begin::Form-->
+		<form id="kt_account_profile_details_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" asp-controller="BasicInfo" asp-action="CreateConsignee" method="post">
+			<!--begin::Card body-->
+			<div class="card-body border-top p-9">
+				<!--begin::Input group-->
+				<div class="row mb-4" style="min-height:69px;">
+					<!--begin::Col-->
+					<div class="col-lg-5">
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text required">ConsigneeName</span>
+							<input type="text" asp-for="ConsigneeName" maxlength="200" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+					</div>
+					<!--end::Col-->
+					<!--begin::Col-->
+					<div class="col-lg-7">
+						<div class="input-group input-group-solid mb-5">
+                            <span class="input-group-text required">ConsigneeEnglishName</span>
+							<input type="text" asp-for="ConsigneeNameEng" maxlength="200" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+					</div>
+					<!--end::Col-->
+				</div>
+				<!--end::Input group-->
+				<!--begin::Input group-->
+				<div class="row mb-6">
+					<!--begin::Col-->
+					<div class="col-lg-5">
+						<div class="fv-row input-group input-group-solid mb-5">
+							<span class="input-group-text">EconomicCode</span>
+							<input type="text" asp-for="EconomicCode" maxlength="20" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text">National Code</span>
+							<input type="text" asp-for="NationalCode" maxlength="20" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+
+					</div>
+					<!--end::Col-->
+					<!--begin::Col-->
+					<div class="col-lg-7">
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text">Email</span>
+							<input type="email" asp-for="Email" maxlength="50" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+						<div class="input-group input-group-solid flex-nowrap">
+							<span class="input-group-text">Address</span>
+							<input type="text" asp-for="Address" maxlength="500" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 hasMaxlength">
+						</div>
+					</div>
+					<!--end::Col-->
+					<!--begin::Col-->
+					<div class="col-lg-5">
+						<div class="input-group input-group-solid flex-nowrap">
+							<span class="input-group-text">City</span>
+							<input type="text" asp-for="City" maxlength="20" class="form-control hasMaxlength" aria-label="Agent" aria-describedby="basic-addon1" />
+						</div>
+					</div>
+					<!--end::Col-->
+					<!--begin::Col-->
+					<div class="col-lg-3 fv-row fv-plugins-icon-container">
+						<div class="form-check form-check-custom form-check-success form-check-solid form-check-sm mb-2">
+							<input id="chk_indivPer" class="form-check-input" type="radio" name="ConsigneeType" value="IndividualPersonality" checked />
+							<label class="form-check-label" for="">
+								IndividualPersonality (حقیقی)
+							</label>
+						</div>
+
+						<div class="form-check form-check-custom form-check-solid form-check-sm mb-2">
+							<input id="chk_legPer" class="form-check-input" type="radio" name="ConsigneeType" value="LegalPersonality" />
+							<label class="form-check-label" for="">
+								LegalPersonality (حقوقی)
+							</label>
+						</div>
+					</div>
+					<!--end::Col-->
+
+				</div>
+				<!--end::Input group-->
+				<!--begin::Input group-->
+				<div class="row mb-6">
+					<!--begin::Col-->
+					<div class="col-lg-8">
+						<div class="input-group input-group-solid mb-5">
+							<span class="input-group-text">Description</span>
+							<textarea asp-for="Description" maxlength="4000" rows="4" class="form-control hasMaxlength"></textarea>
+						</div>
+					</div>
+					<!--end::Col-->
+					<!--begin::Col-->
+					<div class="col-lg-4 repeater">
+						<div class="form-group">
+							<div data-repeater-list="">
+								<div data-repeater-item>
+									<div class="input-group input-group-solid mb-5">
+										<span class="input-group-text">Tel</span>
+										<input type="tel" name="tel" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 Tel">
+										<a href="javascript:;" data-repeater-delete class="btn btn-md btn-light-danger">
+											<i class="bi bi-trash fs-2"></i>
+										</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<button class="btn btn-sm btn-light-primary" data-repeater-create type="button">
+							<i class="la la-plus"></i> Add Tel Number
+						</button>
+					</div>
+					<!--end::Col-->
+
+				</div>
+				<!--end::Input group-->
+
+			</div>
+			<!--end::Card body-->
+			<div asp-validation-summary="All" class="text-danger"></div>
+			<!--begin::Actions-->
+			<div class="card-footer d-flex justify-content-end py-6 px-9">
+				<a href="/BasicInfo/ConsigneeList" class="btn btn-light btn-active-light-primary me-2">Back</a>
+				<button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
+				<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+			</div>
+			<!--end::Actions-->
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Content-->
+</div>
+
+
+@section Links{
+	<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+	<script type="text/javascript">
+		$('.repeater').repeater({
+			initEmpty: false,
+			show: function () {
+				telInputmask();
+				$(this).slideDown();
+			},
+
+			hide: function (deleteElement) {
+				$(this).slideUp(deleteElement);
+			},
+			isFirstItemUndeletable: true
+		}); 
+
+		function telInputmask(){
+			Inputmask({
+				"mask": "(999) 99999999"
+			}).mask(".Tel");
+		}
+		$('button[type="reset"]').click(function () {
+			$('select').val(null).trigger("change");
+		});
+		$('.hasMaxlength').maxlength({
+			warningClass: "badge badge-warning",
+			limitReachedClass: "badge badge-danger"
+		});
+
+		$(document).ready(function () {
+			telInputmask();				
+		})
+	</script>
+}

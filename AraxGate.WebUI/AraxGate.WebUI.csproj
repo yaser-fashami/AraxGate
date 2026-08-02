@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SignAssembly>True</SignAssembly>
+	<Title>AraxGate Sulotion</Title>
+	<Authors>Yaser Fashami</Authors>
+	<Version>1.0.0</Version>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Models\ViewModels\CreateLoadingDischargeViewModel.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Views\BasicInfo\AddLoadingDischargeTariff.cshtml" />
+	  <Content Remove="Views\BasicInfo\CreateLoadingDischargeTariff.cshtml" />
+	  <Content Remove="Views\BasicInfo\EditVoyage.cshtml" />
+	  <Content Remove="Views\BasicInfo\LoadingDischargeTariffDetailList.cshtml" />
+	  <Content Remove="Views\BasicInfo\LoadingDischargeTariffList.cshtml" />
+	  <Content Remove="Views\Operation\AddLoadingDischarge.cshtml" />
+	  <Content Remove="Views\Operation\EditLoadingDischarge.cshtml" />
+	  <Content Remove="Views\Operation\LoadingAndDischarge.cshtml" />
+	  <Content Remove="Views\Operation\LoadingDischargeList.cshtml" />
+	  <Content Remove="wwwroot\favicon.ico" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Operation\PrintGateOut.cshtml" />
+    <None Include="wwwroot\sass\vendors\plugins\mixins\_select2.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_datatables.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_plugins.angular.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_plugins.react.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_plugins.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_plugins.vue.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_select2.scss" />
+    <None Include="wwwroot\sass\vendors\plugins\_tiny-slider.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SmartBreadcrumbs" Version="3.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AraxGate.Application\AraxGate.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\BasicInfo\ConsigneeList.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,376 @@
+﻿@model List<GateEntrance>
+
+
+@{
+    int count = 1;
+}
+
+
+<!--begin::Card header-->
+<div class="card-header border-0 pt-6 px-15">
+    <!--begin::Card title-->
+    <div class="card-title">
+    </div>
+    <!--begin::Card title-->
+    <!--begin::Card toolbar-->
+    <div class="card-toolbar">
+        <!--begin::Toolbar-->
+        <div class="d-flex justify-content-end">
+        </div>
+        <!--end::Toolbar-->
+    </div>
+    <!--end::Card toolbar-->
+</div>
+<!--end::Card header-->
+<!--begin::Card body-->
+<div class="card-body py-4">
+    <!--begin::Table-->
+    <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="table-responsive">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt-datatable-responsive">
+                <!--begin::Table head-->
+                <thead>
+                    <!--begin::Table row-->
+                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                        <th class="">Row</th>
+                        <th class="w-250px text-center" data-priority="1">TruckNo</th>
+                        <th class="">Gate Enterance No</th>
+                        <th class="w-200px">Plate Type</th>
+                        <th class="">State</th>
+                        <th class="text-end" data-priority="2">Actions</th>
+                    </tr>
+                    <!--end::Table row-->
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody class="text-gray-600 fw-semibold">
+                    @foreach (GateEntrance item in Model)
+                    {
+                        <tr>
+                            <td>@(count++)</td>
+                            @if (item.PlateType == PlateType.Iran)
+                            {
+                                if (item.TruckNo.Substring(2, 1) == "ا")
+                                {
+                                    <td><section class="plateWrapper"><div class="rowPlate"><div class="rowFlag"> </div><div class="numbers"><span>@item.TruckNo.Substring(0, 2)</span> <span> @item.TruckNo.Substring(2, 3) </span> <span> @item.TruckNo.Substring(5, 3)</span></div><div class="rowProvince">@item.TruckNo.Substring(9, 2)</div></div></section></td>
+                                }
+                                else
+                                {
+                                    <td><section class="plateWrapper"><div class="rowPlate"><div class="rowFlag"> </div><div class="numbers"><span>@item.TruckNo.Substring(0, 2)</span> <span> @item.TruckNo.Substring(2, 1) </span> <span> @item.TruckNo.Substring(3, 3)</span></div><div class="rowProvince">@item.TruckNo.Substring(7, 2)</div></div></section></td>
+                                }
+                            }
+                            else
+                            {
+                                <td class="text-center fs-2" style="height:60px">@item.TruckNoletter</td>
+                            }
+                            <td>@item.GateEntranceNo</td>
+                            <td class="">@item.PlateType</td>
+                            <td>
+                                @if (item.GateOutDate == null)
+                                {
+                                    <span class="badge badge-success">Entered</span>
+
+                                    <br />
+                                    <div class="badge badge-dark fw-bold">@Html.Raw(item.GateInDate.ToShamsiDateString(item.GateInDate.DayOfWeek))</div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-4 min-w-sm-100px">
+                                            <span class="badge badge-success">Entered</span><br />
+                                            <span class="badge badge-dark fw-bold">@Html.Raw(item.GateInDate.ToShamsiDateString(item.GateInDate.DayOfWeek))</span>
+                                        </div>
+                                        <div class="col-4 text-center text-dark d-none d-sm-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" fill="currentColor" class="bi bi-arrow-bar-right mt-2" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5" />
+                                            </svg>
+                                        </div>
+                                        <div class="col-4 min-w-sm-100px">
+                                            <span class="badge badge-danger">Exited</span><br />
+                                            <span class="badge badge-dark fw-bold">@Html.Raw(item.GateOutDate.ToShamsiDateString(item.GateOutDate?.DayOfWeek))</span>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                            @if (item.GateOutDate == null)
+                            {
+                                <td class="text-end">
+                                    <a data-id="@item.Id" data-weightin="@item.GateInWeight" data-plate="@item.TruckNo" data-otherPlate="@item.TruckNoletter" href="#" class="btn btn-icon btn-active-color-danger btn-bg-light btn-sm me-1 gateOut" data-bs-custom-class="tooltip-inverse" data-bs-placement="right" title="GateOut" data-bs-toggle="modal" data-bs-target="#kt_modal_gateOut"> <i class="bi bi-box-arrow-right fs-4"></i></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-end">
+                                    <a data-id="@item.Id" href="#" class="btn btn-icon btn-active-color-danger btn-bg-light btn-sm me-1 print2_btn" data-bs-custom-class="tooltip-inverse" data-bs-placement="right" title="Print" data-bs-toggle="modal" data-bs-target="#kt_modal_print"> <i class="bi bi-printer fs-4"></i></a>
+                                </td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+                <!--end::Table body-->
+            </table>
+        </div>
+    </div>
+    <!--end::Table-->
+
+</div>
+<!--end::Card body-->
+
+<!--begin::Modal GateOut-->
+<div class="modal fade" tabindex="-1" id="kt_modal_gateOut">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id=""> GateOut</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="bi bi-x fs-2"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <!--begin::Input group-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group flex-nowrap mt-4">
+                            <span class="input-group-text col-3">
+                                Driver Name
+                            </span>
+                            <div class="overflow-hidden flex-grow-1">
+                                <input class="form-control rounded-start-0" id="driver" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group flex-nowrap mt-4">
+                        <span class="input-group-text col-3">
+                            Baskool
+                        </span>
+                        <div class="overflow-hidden flex-grow-1">
+                            <select id="selectBaskoolOut" class="form-select rounded-start-0" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+                                <option value=""></option>
+                                <option value="b1">GateOut_B1</option>
+                                <option value="b2">GateOut_B2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group flex-nowrap mt-4">
+                        <span class="input-group-text col-3">
+                            Weight Out
+                        </span>
+                        <div class="input-group">
+                            <input class="form-control rounded-start-0" placeholder="" id="weightOut" disabled />
+                            <span class="input-group-text">.Kg</span>
+                        </div>
+                    </div>
+                    <div class="input-group flex-nowrap mt-4">
+                        <button type="button" class="btn btn-primary btn-sm col-3" id="netWeight_btn" data-weightin="">Net Weight</button>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="" id="netWeight" disabled />
+                            <span class="input-group-text">.Kg</span>
+                        </div>
+                    </div>
+                    <div class="input-group mt-4">
+                        <textarea id="descriptionOut" class="input-group border-gray-500 border-dashed col-lg-12 p-5 rounded-2 border-active-light" dir="rtl" rows="3" placeholder="Add Description" draggable="false"></textarea>
+                    </div>
+                    <div class="input-group flex-nowrap mt-4">
+                        <img id="plateExit" src="" />
+                    </div>
+                </div>
+
+                <!--end::Input group-->
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="closeGateout_btn">Close</button>
+                <button type="button" class="btn btn-primary" id="exit_btn" data-id="">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal GateOut-->
+
+<!--begin::Modal Print-->
+<div class="modal fade" tabindex="-1" id="kt_modal_print">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"> Print View</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="bi bi-x fs-2"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body" id="printBody">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="printClose_btn">Close</button>
+                <button type="button" class="btn btn-primary" id="print_btn">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal Print-->
+
+
+<script type="text/javascript">
+    $('.print2_btn').click(function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/Operation/GetPrint',
+            type: 'GET',
+            data: { id: id },
+            success: function (data) {
+                $('#printBody').html(data);
+            }
+        });
+
+    });
+
+    $('#print_btn').click(function () {
+        $('#printBody').print();
+    });
+
+    $('#printClose_btn').click(function () {
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        $(this).blur();
+    });
+
+    $('#closeGateout_btn').click(function () {
+        $('#plateExit').attr('src', '');
+        $('#netWeight').val('');
+        $('#weightOut').val('');
+        $('#driver').val('');
+        $('#selectBaskoolOut').val(null).trigger('change',-1);
+    })
+
+    $('#netWeight_btn').click(function () {
+        if ($('#weightOut').val() == '' || $('#weightOut').val() <= 0) {
+            Swal.fire({
+                title: "Incomplete information!",
+                text: "You must fill Weight Out at the first!",
+                icon: "error",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            })
+        } else {
+            var weightIn = $(this).data('weightin');
+            $('#netWeight').val(Math.abs(weightIn - $('#weightOut').val()));
+        }
+    });
+
+    $('#selectBaskoolOut').change(function (event, customValue) {
+        if (customValue == -1) {
+            return;
+        }
+        var baskoolOut = $('#selectBaskoolOut').val();
+        $('#weightOut').val('');
+        $.ajax({
+            url: '/Operation/GetBaskoolData',
+            type: 'GET',
+            data: { baskool: baskoolOut },
+            success: function (res) {
+                if (res == null || res == 0) {
+                    Swal.fire({
+                        title: "No Enter!",
+                        text: "There isn`t any Tanker on this Baskool",
+                        icon: "error",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function () {
+                    })
+                    return;
+                } else {
+                    $('#weightOut').val(res);
+                }
+            }
+        });
+    });
+
+
+    $('.gateOut').click(async function () {
+        $('#netWeight_btn').data('weightin', $(this).data('weightin'));
+        var plate = getPlateNoFromCam(3);
+        var inputPlate = $(this).data('plate');
+        if (plate != null && plate != inputPlate) {
+            Swal.fire({
+                title: "This truck is not the same truck that arrived.",
+                text: "pay attention to the truck's license plate...!",
+                position: 'bottom',
+                icon: "error",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            }).then(function () {
+                $('#kt_modal_gateOut').modal('hide');
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                return;
+            });
+        }
+
+        var id = $(this).data('id');
+        $('#exit_btn').data('id', id);
+        $('#driver').val('');
+    });
+
+
+    $('#exit_btn').click(async function () {
+        var id = $(this).data('id');
+        if ($('#driver').val() == '' || $('#weightOut').val() == '') {
+            Swal.fire({
+                title: "Incomplete information!",
+                text: "All field must be filled!",
+                icon: "error",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            }).then(function () {
+                return;
+            });
+        } else {
+            const picFileOut = await getFromDB("GateOutPic");
+
+            $.ajax({
+                url: '/Operation/GateOut',
+                type: 'POST',
+                data: { id: id, driverName: $('#driver').val(), baskool: $('#selectBaskoolOut').val(), weightOut: $('#weightOut').val(), gateOutFrontPlatePic: picFileOut, description: $('#descriptionOut').val() },
+                success: async function (res) {
+                    if (res == true) {
+                        $('#kt_modal_gateOut').modal('hide');
+                        $.ajax({
+                            url: '/Operation/GetPrint',
+                            type: 'GET',
+                            data: { id: id },
+                            success: async function (data) {
+                                $('#printBody').html(data);
+                                $('#kt_modal_print').modal('show');
+                                await deleteFromDB("GateOutPic");
+                            }
+                        });
+
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            icon: "error",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        $('#kt_modal_gateOut').modal('hide');
+                        setTimeout(location.reload.bind(location), 2500);
+                    }
+                }
+            });
+            $('#plateExit').attr('src', '');
+        }
+    });
+
+</script>

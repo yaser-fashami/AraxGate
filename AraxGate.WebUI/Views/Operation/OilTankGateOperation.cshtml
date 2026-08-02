@@ -1,0 +1,524 @@
+﻿
+
+<!--begin::DounutChart-->
+<div class="col-lg-6">
+    <div class="card card-flush h-lg-100">
+        <!--begin::Card header-->
+        <div class="card-header mt-6">
+            <!--begin::Card title-->
+            <div class="card-title flex-column align-items-end ms-auto">
+                <h5 class="fw-bold mb-1">هفته و روز مورد نظر خود را انتخاب کن</h5>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Card toolbar-->
+            <div class="card-toolbar flex-nowrap">
+                <!--begin::Select-->
+                <select id="week" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-125px select2-hidden-accessible me-4" data-select2-id="select2-data-4-cnzx" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
+                    <option value="1" selected="" data-select2-id="select2-data-4-pil0">هفته اول</option>
+                    <option value="2">هفته دوم</option>
+                    <option value="3">هفته سوم</option>
+                    <option value="4">هفته چهارم</option>
+                </select>
+                <!--end::Select-->
+                <!--begin::Select-->
+                <select id="month" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-125px select2-hidden-accessible me-4" data-select2-id="select2-data-12-cnzx" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
+                    <option value="1" selected="" data-select2-id="select2-data-14-pil0">فروردین</option>
+                    <option value="2">اردیبهشت</option>
+                    <option value="3">خرداد</option>
+                    <option value="4">تیر</option>
+                    <option value="5">مرداد</option>
+                    <option value="6">شهریور</option>
+                    <option value="7">مهر</option>
+                    <option value="8">آبان</option>
+                    <option value="9">آذر</option>
+                    <option value="10">دی</option>
+                    <option value="11">بهمن</option>
+                    <option value="12">اسفند</option>
+                </select>
+                <!--end::Select-->
+                <!--begin::Select-->
+                <select id="year" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-125px select2-hidden-accessible me-4" data-select2-id="select2-data-years-cnzx" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
+                    <option value="1405" selected="" data-select2-id="select2-data-years-pil0">1405</option>
+                    <option value="1406">1406</option>
+                </select>
+                <!--end::Select-->
+            </div>
+            <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body p-9 pt-4">
+            <!--begin::Dates-->
+            <ul id="tabDayList" class="nav nav-pills d-flex flex-nowrap" role="tablist">
+            </ul>
+            <div class="my-10">
+                <label id="selectedDay" class="form-label"></label>
+            </div>
+            <!--end::Dates-->
+            <!--begin::Tab Content-->
+            <div id="dounutContent" class="tab-content">
+            </div>
+            <!--end::Tab Content-->
+        </div>
+        <!--end::Card body-->
+    </div>
+</div>
+<!--end::DounutChart-->
+
+<!--begin::ApexChart-->
+<div class="col-lg-6">
+    <div class="card card-flush h-lg-100">
+        <!--begin::Card header-->
+        <div class="card-header mt-6">
+            <!--begin::Card title-->
+            <div class="card-title flex-column align-items-end ms-auto">
+                <h3 class="fw-bold mb-1">چقدر در این هفته ورودی داشتیم؟</h3>
+
+                <div class="fs-7 text-gray-500">کل ورودی در این هفته : <span id="totalInWeek"> </span></div>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Card toolbar-->
+            <div class="card-toolbar">
+            </div>
+            <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-10 pb-0 px-5">
+            <!--begin::Chart-->
+            <div id="kt_apexcharts_3" style="height: 350px;min-height:350px !important;max-height:400px !important;"></div>
+            <!--end::Chart-->
+        </div>
+        <!--end::Card body-->
+    </div>
+</div>
+<!--end::ApexChart-->
+
+
+<div class="card" id="plateContent">
+</div>
+
+<template id="donutChartTemp">
+    <!--begin::Day-->
+    <div id="kt_schedule_day" class="tab-pane fade show active" role="tabpanel">
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-wrap">
+            <!--begin::Chart-->
+            <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
+                <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
+                    <span class="fs-2qx fw-bold" id="totalAmount"> </span>
+                    <span class="fs-5 fw-semibold text-gray-500">کل ورودی</span>
+                </div>
+                <canvas id="project_overview_chart" width="175" height="175" style="display: block; box-sizing: border-box; height: 175px; width: 175px;"></canvas>
+            </div>
+            <!--end::Chart-->
+            <!--begin::Labels-->
+            <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
+                <!--begin::Label-->
+                <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                    <div class="bullet bg-success me-3"></div>
+                    <div class="text-gray-500">خارج شده</div>
+                    <div class="text-gray-500 flex-grow-1 mx-5 dotted-line">  </div>
+                    <div class="ms-auto fw-bold text-gray-700" id="exitedAmount"></div>
+                </div>
+                <!--end::Label-->
+                <!--begin::Label-->
+                <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                    <div class="bullet bg-gary me-3"></div>
+                    <div class="text-gray-500">خارج نشده</div>
+                    <div class="text-gray-500 flex-grow-1 mx-5 dotted-line">  </div>
+                    <div class="ms-auto fw-bold text-gray-700" id="notExitedAmount"></div>
+                </div>
+                <!--end::Label-->
+                <!--begin::Label-->
+                <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                    <div class="bullet bg-danger me-3"></div>
+                    <div class="text-gray-500">خارج نشده از قبل</div>
+                    <div class="text-gray-500 flex-grow-1 mx-5 dotted-line">  </div>
+                    <div class="ms-auto fw-bold text-gray-700" id="notExitedLately"></div>
+                </div>
+                <!--end::Label-->
+            </div>
+            <!--end::Labels-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Day-->
+</template>
+
+<template id="tabDayListTemp">
+    <!--begin::Date-->
+    <li id="day_0" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary " data-bs-toggle="tab" href="#" aria-selected="false" tabindex="0" role="tab">
+            <span class="opacity-50 fs-6 fw-semibold">ش</span>
+            <span class="fs-6 fw-bold">1</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_1" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary" data-bs-toggle="tab" href="#" aria-selected="false" role="tab" tabindex="1">
+            <span class="opacity-50 fs-6 fw-semibold">ی</span>
+            <span class="fs-6 fw-bold">2</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_2" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary" data-bs-toggle="tab" href="#" aria-selected="false" role="tab" tabindex="2">
+            <span class="opacity-50 fs-6 fw-semibold">د</span>
+            <span class="fs-6 fw-bold">3</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_3" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary" data-bs-toggle="tab" href="#" aria-selected="false" role="tab" tabindex="3">
+            <span class="opacity-50 fs-6 fw-semibold">س</span>
+            <span class="fs-6 fw-bold">4</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_4" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary" data-bs-toggle="tab" href="#" aria-selected="true" tabindex="4" role="tab">
+            <span class="opacity-50 fs-6 fw-semibold">چ</span>
+            <span class="fs-6 fw-bold">5</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_5" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary " data-bs-toggle="tab" href="#" aria-selected="false" tabindex="5" role="tab">
+            <span class="opacity-50 fs-6 fw-semibold">پ</span>
+            <span class="fs-6 fw-bold">6</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+    <!--begin::Date-->
+    <li id="day_6" class="nav-item me-1" role="presentation">
+        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary " data-bs-toggle="tab" href="#" aria-selected="false" tabindex="5" role="tab">
+            <span class="opacity-50 fs-6 fw-semibold">ج</span>
+            <span class="fs-6 fw-bold">7</span>
+            <span class="fs-7 fw-bold">FAR</span>
+        </a>
+    </li>
+    <!--end::Date-->
+
+</template>
+
+
+
+@section Links {
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/licenseplate.css" rel="stylesheet" />
+    <style>
+        .dotted-line {
+            border-top: 2px dotted #d1d5db;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/custom/apps/user-management/users/list/tableVessel.js"></script>
+    <script src="~/assets/js/custom/apps/oiltankgateoperation.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.print/jquery.print.min.js"></script>
+
+    <script src="~/assets/plugins/doughnutchart.js"></script>
+    <script src="~/assets/plugins/global/persian-date.min.js"></script>
+    <script src="~/assets/js/apexchart3.js"></script>
+    <script type="text/javascript">
+        if ('@ViewData["role"]' == "admin") {
+            $('#weight').removeAttr('disabled');
+            $('#weightOut').removeAttr('disabled');
+        }
+
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('#plateContent').css('visibility', 'visible')
+                $('#plateContent').hide();
+                $('#plateContent').fadeIn();
+            }, 500)
+
+        });
+
+
+        function getWeekDates(year, month, weekNumber) {
+
+            const dayNames = [
+                "شنبه",
+                "یکشنبه",
+                "دوشنبه",
+                "سه‌شنبه",
+                "چهارشنبه",
+                "پنجشنبه",
+                "جمعه"
+            ];
+
+            // روز اول ماه شمسی
+            let firstDay = new persianDate([year, month, 1]);
+
+            // تبدیل به Date میلادی
+            let firstGregorian = firstDay.toDate();
+
+            // روز هفته در JS:
+            // 0 یکشنبه ... 6 شنبه
+            // تبدیل به شنبه=0
+            let weekDay = (firstGregorian.getDay() + 1) % 7;
+
+            // شروع هفته اول
+            let start = new Date(firstGregorian);
+            start.setDate(start.getDate() - weekDay);
+
+            // رفتن به هفته مورد نظر
+            start.setDate(start.getDate() + ((weekNumber - 1) * 7));
+
+
+            let result = [];
+
+            for (let i = 0; i < 7; i++) {
+
+                let current = new Date(start);
+
+                current.setDate(start.getDate() + i);
+
+
+                let p = new persianDate(current);
+
+
+                result.push({
+                    dayName: dayNames[(current.getDay() + 1) % 7],
+                    date: p.format("YYYY/MM/DD"),
+                    year: p.year(),
+                    month: p.month(),
+                    day: p.date(),
+                    isCurrentMonth: p.month() === month
+                });
+            }
+
+            return result;
+        }
+
+        $("#week,#month,#year").change(function () {
+            $("#tabDayList > li").remove();
+            $("#tabDayList").append($("#tabDayListTemp").html());
+            dayListAction();
+
+            $('a').removeClass("active");
+            $('#selectedDay').text('');
+            $('#dounutContent').html('');
+            totalInWeek();
+            weekEnteranceFetch();
+             $('#plateContent').html('');
+        });
+
+        function monthsMapFarsi(m){
+            let res;
+            switch(m){
+                case 1:res = "فروردین"
+                break;
+                case 2:res = "اردیبهشت"
+                break;
+                case 3:res = "خرداد"
+                break;
+                case 4:res = "تیر"
+                break;
+                case 5:res = "مرداد"
+                break;
+                case 6:res = "شهریور"
+                break;
+                case 7:res = "مهر"
+                break;
+                case 8:res = "آبان"
+                break;
+                case 9:res = "آذر"
+                break;
+                case 10:res = "دی"
+                break;
+                case 11:res = "بهمن"
+                break;
+                case 12:res = "اسفند"
+                break;
+            }
+            return res;
+        }
+        function monthsMap(m){
+            let res;
+            switch(m){
+                case 1:res = "FAR"
+                break;
+                case 2:res = "ORD"
+                break;
+                case 3:res = "KHO"
+                break;
+                case 4:res = "TIR"
+                break;
+                case 5:res = "MOR"
+                break;
+                case 6:res = "SHA"
+                break;
+                case 7:res = "MEH"
+                break;
+                case 8:res = "ABA"
+                break;
+                case 9:res = "AZA"
+                break;
+                case 10:res = "DEY"
+                break;
+                case 11:res = "BAH"
+                break;
+                case 12:res = "ESF"
+                break;
+            }
+            return res;
+        }
+
+        function datesPlacement(week, month){
+            for(let i = 0; i < 7; i++){
+                $(`#day_${i} span:nth-child(2)`).text(week[i].day);
+                $(`#day_${i} span:nth-child(3)`).text(monthsMap(week[i].month));
+                $(`#day_${i} > a`).data('date', week[i]);
+            }
+        }
+
+        function dayListAction(){
+            $('#tabDayList li a').click(function(){
+            $("#dounutContent > div").remove();
+            $("#dounutContent").append($("#donutChartTemp").html());
+            var date = $(this).data('date');
+
+            let selected = {
+                year: date.year,
+                month: date.month,
+                day: date.day
+            };
+
+            let gregorian = new persianDate([
+                selected.year,
+                selected.month,
+                selected.day
+            ]).toDate();
+
+
+            let requestDate = {
+                year: gregorian.getFullYear(),
+                month: gregorian.getMonth() + 1,
+                day: gregorian.getDate()
+            };
+
+                $.ajax({
+                    url: '/api/dashboard/dounutChart',
+                    type: 'GET',
+                    data: {
+                            day: date.day,
+                            month: date.month,
+                            year: date.year
+                          },
+                    success: function(res){
+                        $('#totalAmount').text(res.enteranceCount);
+                        $('#exitedAmount').text(res.exitedCount);
+                        $('#notExitedAmount').text((res.enteranceCount - res.exitedCount));
+                        $('#notExitedLately').text(res.notExitedLately);
+                        var data = [res.exitedCount, (res.enteranceCount - res.exitedCount), res.notExitedLately]
+                        KTUtil.onDOMContentLoaded(function () {
+                            KTDoughnutList.init(data, $('#project_overview_chart'), ['Exited', 'notExited', 'notExitedLately']);
+                        });
+                        truckEnteranced(requestDate);
+                    }
+                })
+
+            });
+
+            $('li > a').click(function(){
+                var date = $(this).data('date');
+                $('#selectedDay').text(date.dayName+' '+date.day+' '+monthsMapFarsi(date.month));
+            });
+            totalInWeek();
+        }
+
+        function totalInWeek(){
+            let week = $("#week").val();
+            let month = $("#month").val();
+            let year = $("#year").val();
+
+            let result = getWeekDates(
+                year,
+                month,
+                week
+            );
+            let date = {
+                fromYear: result[0].year,
+                fromMonth: result[0].month,
+                fromDay: result[0].day,
+                toYear: result[6].year,
+                toMonth: result[6].month,
+                toDay: result[6].day
+            };
+
+            $.ajax({
+                url: '/api/dashboard/dounutTotalCount',
+                type: 'GET',
+                data: date,
+                success: function(res){
+                    $('#totalInWeek').text(res.totalInWeek);
+                }
+            })
+
+            datesPlacement(result, month);
+        }
+
+        function weekEnteranceFetch(){
+            let week = $("#week").val();
+            let month = $("#month").val();
+            let year = $("#year").val();
+
+            let result = getWeekDates(
+                year,
+                month,
+                week
+            );
+            let date = {
+                fromYear: result[0].year,
+                fromMonth: result[0].month,
+                fromDay: result[0].day,
+            };
+
+            $.ajax({
+                url: '/api/dashboard/WeekEnterance',
+                type: 'GET',
+                data: date,
+                success: function(res){
+                    createAreaChart(res);
+                }
+            })
+
+        }
+
+        function truckEnteranced(date){
+            $('#plateContent').hide();
+
+            $.ajax({
+                url: '/Operation/TruckEnterenced',
+                type: 'GET',
+                data: date,
+                success: function(result) {
+                    $('#plateContent').html(result);
+                    $('#plateContent').fadeIn();
+                },
+                error: function() {
+                    alert('Error');
+                }
+            });
+        }
+
+    </script>
+}

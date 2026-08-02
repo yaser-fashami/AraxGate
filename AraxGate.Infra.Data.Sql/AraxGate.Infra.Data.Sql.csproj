@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Yaser-Fashami.cer</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configurations\LoadingDischargeConfig.cs" />
+    <Compile Remove="Configurations\LoadingDischargeInvoiceConfig.cs" />
+    <Compile Remove="Configurations\LoadingDischargeTariffConfig.cs" />
+    <Compile Remove="Configurations\VesselStoppageStatusConfig.cs" />
+    <Compile Remove="EFRepositories\VesselStoppageRepository.cs" />
+    <Compile Remove="EFRepositories\VoyageRepository.cs" />
+    <Compile Remove="Migrations\NeginDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFrameworkCore.Exceptions.SqlServer" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AraxGate.Core\AraxGate.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>
